@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="//at.alicdn.com/t/font_655088_fwkpx34y0p0kke29.js"></script>
+    <link rel="stylesheet" href="./cv.css">
+    <title>小画板呀</title>
+</head>
+
+<body>
+    <canvas id="cv" width="350px" height="350px"></canvas>
+    <div id="actions" class="actions">
+        <svg class="icon active" id="pen">
+            <use xlink:href="#icon-pencil"></use>
+        </svg>
+        <svg class="icon" id="eraser">
+            <use xlink:href="#icon-ico-erasertool-May"></use>
+        </svg>
+        <svg class="icon" id="clear">
+            <use xlink:href="#icon-custom-clear"></use>
+        </svg>
+        <svg class="icon" id="download">
+            <use xlink:href="#icon-save"></use>
+        </svg>
+    </div>
+    <ol class="colors">
+        <li id="black" class="black active"></li>
+        <li id="red" class="red"></li>
+        <li id="blue" class="blue"></li>
+    </ol>
+    <ol class="size">
+        <li id="thin" class="thin"></li>
+        <li id="fat" class="fat"></li>
+    </ol>
+    <script src="./cv.js"></script>
+</body>
+
+</html>
