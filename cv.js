@@ -1,6 +1,7 @@
 var cv = document.getElementById('cv')
 var context = cv.getContext('2d')
-var lineWidth = 5
+var lineWidth = 6
+lineWidth2 = 3
 
 autoSetCanvasSize(cv) //设定画布大小
 listenuser(cv) //绘画事件
@@ -45,7 +46,14 @@ blue.onclick = function () {
     rem(red,black)
     add(blue)
 }
-
+fat.onclick=function(){
+    lineWidth = 10
+    lineWidth2 = 5
+}
+thin.onclick=function(){
+    lineWidth = 6
+    lineWidth2 = 3
+}
 
 //工具函数
 function add(n){  
@@ -63,8 +71,8 @@ function autoSetCanvasSize(canvas){
     function setCanvasSize() {
         var pageWidth = document.documentElement.clientWidth //可见区域宽度
         var pageHeight = document.documentElement.clientHeight
-        canvas.width = pageWidth
-        canvas.height = pageHeight
+        cv.width = pageWidth
+        cv.height = pageHeight
     }
 }
 function drawCircle(x, y, radius) {
@@ -74,7 +82,6 @@ function drawCircle(x, y, radius) {
 }
 function drawLine(x1, y1, x2, y2) {
     context.beginPath();
-    // context.strokeStyle = 'black'
     context.moveTo(x1, y1) // 起点
     context.lineWidth = lineWidth // 线的粗细大小
     context.lineTo(x2, y2) // 终点
@@ -98,7 +105,7 @@ function listenuser(canvas) {
                 context.clearRect(x - 5, y - 5, 10, 10)
             } else {
                 lastPoint = {"x": x,"y": y}
-                drawCircle(lastPoint.x, lastPoint.y,lineWidth-2)
+                drawCircle(lastPoint.x, lastPoint.y,lineWidth2)
             }
         }
         canvas.ontouchmove = function (e) {
@@ -130,7 +137,7 @@ function listenuser(canvas) {
                 context.clearRect(x - 10, y - 10, 20, 20)
             } else {
                 lastPoint = {"x": x,"y": y}
-                drawCircle(lastPoint.x, lastPoint.y,lineWidth-2)
+                drawCircle(lastPoint.x, lastPoint.y,lineWidth2)
             }
         }
         canvas.onmousemove = function (a) {
