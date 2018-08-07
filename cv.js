@@ -9,13 +9,13 @@ var eraserEnabled = false //用于切换画笔橡皮
 
 pen.onclick = function () {
     eraserEnabled = false;
-    pen.classList.add('active')
-    eraser.classList.remove('active')
+    add(pen)
+    rem(eraser)
 }
 eraser.onclick = function () {
     eraserEnabled = true;
-    eraser.classList.add('active')
-    pen.classList.remove('active')
+    add(eraser)
+    rem(pen)
 }
 clear.onclick = function(){
     context.clearRect(0,0,cv.clientWidth,cv.height)
@@ -29,43 +29,47 @@ download.onclick = function(){
 }
 black.onclick = function () {
     context.strokeStyle = 'black'
-    black.classList.add('active')
-    red.classList.remove('active')
-    blue.classList.remove('active')
+    context.fillStyle= 'black'
+    add(black)
+    rem(red,blue)
 }
 red.onclick = function () {
     context.strokeStyle = '#ff6464'
     context.fillStyle= '#ff6464'
-    red.classList.add('active')
-    blue.classList.remove('active')
-    black.classList.remove('active')
+    add(red)
+    rem(blue,black)
 }
 blue.onclick = function () {
     context.strokeStyle = '#7878ff'
     context.fillStyle="#7878ff"
-    red.classList.remove('active')
-    blue.classList.add('active')
-    black.classList.remove('active')
+    rem(red,black)
+    add(blue)
 }
 
 
 //工具函数
+function add(n){  
+    n.classList.add('active')
+}
+function rem(a,b=a){
+    a.classList.remove('active')
+    b.classList.remove('active')
+}
 function autoSetCanvasSize(canvas){
     setCanvasSize()
     window.onresize = function () {
         setCanvasSize()
     }
     function setCanvasSize() {
-        var pageWidth = document.documentElement.clientWidth
+        var pageWidth = document.documentElement.clientWidth //可见区域宽度
         var pageHeight = document.documentElement.clientHeight
         canvas.width = pageWidth
         canvas.height = pageHeight
     }
 }
 function drawCircle(x, y, radius) {
-    context.beginPath()
+    context.beginPath() //开始一条路径，或重置当前的路径。
     context.arc(x, y, radius, 0, Math.PI * 2);
-    //context.rect(x,y,lineWidth,lineWidth)
     context.fill()
 }
 function drawLine(x1, y1, x2, y2) {
@@ -84,7 +88,6 @@ function listenuser(canvas) {
         x: undefined,
         y: undefined
     }
-
     if (document.body.ontouchstart !== undefined) {
         //触屏设备,进行特性检测
         canvas.ontouchstart = function (e) {
@@ -101,9 +104,7 @@ function listenuser(canvas) {
         canvas.ontouchmove = function (e) {
             var x = e.touches[0].clientX
             var y = e.touches[0].clientY
-
             if (!using) { return }
-
             if (eraserEnabled) {
                 context.clearRect(x - 5, y - 5, 10, 10)
             } else {
@@ -120,25 +121,24 @@ function listenuser(canvas) {
         }
     } else {
         //非触屏设备
-        canvas.onmousedown = function (aaa) {
+        canvas.onmousedown = function (a) {
             using = true
-            var x = aaa.clientX
-            var y = aaa.clientY
+            //console.log(a)
+            var x = a.clientX
+            var y = a.clientY
             if (eraserEnabled) {
-                context.clearRect(x - 5, y - 5, 20, 20)
+                context.clearRect(x - 10, y - 10, 20, 20)
             } else {
                 lastPoint = {"x": x,"y": y}
                 drawCircle(lastPoint.x, lastPoint.y,lineWidth-2)
             }
         }
-        canvas.onmousemove = function (aaa) {
-            var x = aaa.clientX
-            var y = aaa.clientY
-
+        canvas.onmousemove = function (a) {
+            var x = a.clientX
+            var y = a.clientY
             if (!using) { return }
-
             if (eraserEnabled) {
-                context.clearRect(x - 5, y - 5, 20, 20)
+                context.clearRect(x - 10, y - 10, 20, 20)
             } else {
                 var newPoint = {
                     "x": x,
